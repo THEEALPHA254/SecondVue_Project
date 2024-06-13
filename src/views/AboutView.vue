@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 let all_members = ref([]);
 const router = useRouter();
 
+
 const api = axios.create({
   baseURL: 'http://localhost:8000/api/',
   headers: {
@@ -23,9 +24,12 @@ async function fetchMembers() {
   }
 }
 
+
+
+
 async function deleteMember(id) {
   try {
-    await api.delete(member/${id}/);
+    await api.delete(`member/${id}/`);
     all_members.value = all_members.value.filter(member => member.id !== id);
   } catch (error) {
     console.error('Error deleting member:', error);
@@ -34,8 +38,9 @@ async function deleteMember(id) {
 
 function editMember(id) {
   const member = all_members.value.find(member => member.id === id);
-  router.push({ name: 'Members', query: { edit: member } });
+  router.push({ name: 'home', query: { edit: member } });
 }
+
 onMounted(()=>{
   fetchMembers()
 })
